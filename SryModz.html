@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SryModz BO2</title>
+<style>
+:root {
+  --rgb: 0,229,255;
+  --accent: #00e5ff;
+  --bg: #070910;
+  --panel: rgba(14,19,31,.94);
+  --text: #effaff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; min-height:100vh; padding:20px;
+  background:var(--bg); color:var(--text);
+  font:14px Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+body::before {
+  content:""; position:fixed; inset:-50%;
+  pointer-events:none; z-index:-1;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(var(--rgb),.14),transparent 35%),
+    radial-gradient(ellipse at 80% 75%,rgba(155,40,255,.12),transparent 35%);
+  animation:backgroundMove 12s ease-in-out infinite alternate;
+}
+@keyframes backgroundMove {
+  from { transform:translate(-2%,-2%) rotate(0deg); }
+  to { transform:translate(2%,2%) rotate(5deg); }
+}
+@keyframes rgb {
+  0% { --rgb:255,35,95; }
+  17% { --rgb:255,160,35; }
+  34% { --rgb:225,255,45; }
+  51% { --rgb:30,255,145; }
+  68% { --rgb:0,210,255; }
+  85% { --rgb:175,70,255; }
+  100% { --rgb:255,35,95; }
+}
+@keyframes logoRainbow {
+  0% { color:#ff315d; }
+  20% { color:#ffb52e; }
+  40% { color:#49ff8c; }
+  60% { color:#00dcff; }
+  80% { color:#b55cff; }
+  100% { color:#ff315d; }
+}
+@keyframes pulse {
+  0%,100% { box-shadow:0 0 7px rgba(var(--rgb),.2); }
+  50% { box-shadow:0 0 22px rgba(var(--rgb),.6); }
+}
+* { scrollbar-color:#34435a #0b0e16; }
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+button:focus-visible,input:focus-visible,select:focus-visible {
+  outline:2px solid var(--accent); outline-offset:3px;
+}
+.shell {
+  width:min(100%,1000px); margin:auto;
+  background:rgba(6,9,16,.95);
+  border:1px solid rgba(var(--rgb),.42);
+  border-radius:13px; overflow:hidden;
+  box-shadow:0 0 35px rgba(var(--rgb),.1),0 30px 90px #000b;
+  animation:pulse 5s ease-in-out infinite;
+}
+.top {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:15px; padding:22px 25px;
+  background:linear-gradient(110deg,#151d2b,#090c14);
+  border-bottom:1px solid #293448;
+}
+.logo {
+  font-size:32px; font-weight:1000; letter-spacing:2px;
+  animation:logoRainbow 5s linear infinite;
+  text-shadow:0 0 18px currentColor;
+}
+.sub {
+  color:#8795ac; font-size:10px; letter-spacing:4px; margin-top:6px;
+}
+.top-right { display:flex; gap:8px; }
+.btn {
+  padding:10px 13px; border-radius:6px;
+  color:var(--text); background:#141c2a;
+  border:1px solid #344158;
+}
+.btn:hover { border-color:var(--accent); color:var(--accent); }
+.status {
+  display:flex; justify-content:space-between; gap:12px;
+  padding:11px 22px; background:#090d15;
+  border-bottom:1px solid #202a3b;
+  color:#8493ab; font-size:10px; letter-spacing:1.5px;
+}
+.status strong { color:var(--accent); }
+.layout { display:grid; grid-template-columns:210px minmax(0,1fr); }
+.sidebar {
+  padding:17px 11px; background:#0b0f18;
+  border-right:1px solid #202a3b;
+}
+.label {
+  color:#64748c; font-size:10px; letter-spacing:2px;
+  padding:9px 10px 13px;
+}
+.nav { display:flex; flex-direction:column; gap:5px; }
+.nav button {
+  display:flex; align-items:center; gap:10px;
+  width:100%; padding:13px 10px;
+  color:#a6b3c8; background:transparent;
+  border:1px solid transparent; border-radius:6px;
+  text-align:left; transition:.18s;
+}
+.nav button:hover {
+  color:white; background:#151d2a;
+  border-color:#28374c; transform:translateX(2px);
+}
+.nav button.active {
+  color:white;
+  background:linear-gradient(90deg,rgba(var(--rgb),.17),#121a28);
+  border-color:rgba(var(--rgb),.48);
+  box-shadow:inset 3px 0 var(--accent),0 0 15px rgba(var(--rgb),.06);
+}
+.ico { width:20px; text-align:center; font-size:16px; }
+.main { min-width:0; padding:25px; }
+.heading {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; margin-bottom:8px;
+}
+h1 { margin:0; font-size:24px; letter-spacing:.5px; }
+.badge {
+  border:1px solid rgba(var(--rgb),.45);
+  color:var(--accent); background:rgba(var(--rgb),.08);
+  padding:6px 9px; border-radius:4px;
+  font-size:9px; letter-spacing:1.5px;
+}
+.desc { color:#8996ac; font-size:12px; line-height:1.7; margin:0 0 22px; }
+.group {
+  font-size:10px; letter-spacing:2px; color:var(--accent);
+  padding-bottom:9px; margin:22px 0 10px;
+  border-bottom:1px solid #202b3b;
+}
+.item {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; padding:14px; margin-bottom:7px;
+  background:linear-gradient(100deg,#111724,#0d121c);
+  border:1px solid #202a3b; border-radius:7px;
+  transition:border-color .2s,background .2s;
+}
+.item:hover {
+  border-color:rgba(var(--rgb),.55);
+  background:linear-gradient(100deg,#172333,#101725);
+}
+.item-name { font-weight:700; font-size:13px; }
+.item-desc { color:#8290a6; font-size:11px; margin-top:5px; line-height:1.5; }
+.switch {
+  flex-shrink:0; position:relative; width:43px; height:23px;
+  border-radius:20px; background:#30394a;
+  border:1px solid #4a566b; padding:0; transition:.2s;
+}
+.switch::after {
+  content:""; position:absolute; width:15px; height:15px;
+  left:3px; top:3px; border-radius:50%; background:#a3aec0;
+  transition:.2s;
+}
+.switch.on {
+  background:rgba(var(--rgb),.23);
+  border-color:var(--accent);
+  box-shadow:0 0 12px rgba(var(--rgb),.17);
+}
+.switch.on::after {
+  left:22px; background:var(--accent);
+  box-shadow:0 0 10px var(--accent);
+}
+.color-options { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.swatch {
+  width:27px; height:27px; border-radius:50%;
+  border:2px solid #ffffff66; padding:0;
+}
+.swatch:hover { outline:2px solid white; outline-offset:2px; }
+input[type=color] {
+  height:34px; width:45px; border:1px solid #344158;
+  border-radius:6px; background:#0c111a; padding:3px;
+}
+select {
+  max-width:150px; padding:9px;
+  color:white; background:#101724; border:1px solid #344158;
+  border-radius:6px;
+}
+.footer {
+  display:flex; justify-content:space-between; gap:10px;
+  padding:13px 20px; color:#64728a; font-size:10px;
+  border-top:1px solid #202a3b;
+}
+#reopen {
+  display:none; position:fixed; right:20px; bottom:20px;
+  padding:14px 18px; border:1px solid var(--accent);
+  border-radius:7px; color:#061016; font-weight:bold;
+  background:var(--accent); box-shadow:0 0 24px rgba(var(--rgb),.4);
+}
+.hidden { display:none!important; }
+@media(max-width:600px) {
+  body { padding:7px; }
+  .top { padding:16px; }
+  .logo { font-size:25px; }
+  .layout { grid-template-columns:125px minmax(0,1fr); }
+  .sidebar { padding:10px 5px; }
+  .nav button { padding:11px 5px; gap:4px; font-size:11px; }
+  .ico { width:16px; }
+  .main { padding:14px 9px; }
+  h1 { font-size:19px; }
+  .item { padding:11px 8px; gap:6px; }
+  .item-name { font-size:12px; }
+  .item-desc { font-size:10px; }
+  .status { padding:10px; font-size:9px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation:none!important; transition:none!important; }
+}
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <header class="top">
+    <div>
+      <div class="logo">SryModz</div>
+      <div class="sub">CALL OF DUTY · BLACK OPS II</div>
+    </div>
+    <div class="top-right">
+      <button class="btn" id="rgbBtn">RGB</button>
+      <button class="btn" id="closeBtn" aria-label="Menü schließen">✕</button>
+    </div>
+  </header>
+
+  <div class="status">
+    <span>MENU STATUS <strong>● ACTIVE</strong></span>
+    <span id="current">MAIN MENU</span>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="label">MENU NAVIGATION</div>
+      <nav class="nav" id="nav">
+        <button class="active" data-page="main"><span class="ico">⌂</span>Main Menu</button>
+        <button data-page="self"><span class="ico">◈</span>Self Menu</button>
+        <button data-page="aim"><span class="ico">⊙</span>Aimbot</button>
+        <button data-page="weapon"><span class="ico">✦</span>Weapon</button>
+        <button data-page="zombies"><span class="ico">☠</span>Zombies</button>
+        <button data-page="multi"><span class="ico">♙</span>Multiplayer</button>
+        <button data-page="stats"><span class="ico">▤</span>Prestige & Stats</button>
+        <button data-page="settings"><span class="ico">⚙</span>Settings</button>
+      </nav>
+    </aside>
+    <main class="main" id="main"></main>
+  </div>
+  <footer class="footer">
+    <span>SRYMODZ INTERFACE</span><span>BO2 STYLE</span>
+  </footer>
+</div>
+<button id="reopen">SryModz öffnen</button>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const root = document.documentElement;
+  const main = $("main");
+  const shell = $("shell");
+  let pageName = "main";
+  let accent = "#00e5ff";
+  let rgb = true;
+  const toggles = {};
+
+  const pages = {
+    main: ["Main Menu","Hauptmenü und schnelle Menüoptionen",[
+      ["Menu Glow","Leuchteffekt für das Interface"],
+      ["Animated Background","Animierter Hintergrund"],
+      ["RGB Effects","Farbige Effekte aktivieren"],
+      ["Menu Particles","Hintergrundeffekte"]
+    ]],
+    self: ["Self Menu","Persönliche Anzeige- und Spieleroptionen",[
+      ["Player HUD","HUD-Anzeigeoption"],
+      ["Name Display","Namensanzeige"],
+      ["Visual Effects","Visuelle Effekte"],
+      ["Status Display","Statusanzeige"],
+      ["Custom Tag","Benutzerdefinierte Kennzeichnung"]
+    ]],
+    aim: ["Aimbot","Zieloptionen im Menü",[
+      ["Aimbot","Zieloption"],
+      ["Aim Assist","Zielhilfe-Option"],
+      ["Visible Check","Sichtbarkeitsoption"],
+      ["Target Lines","Zielmarkierungen"],
+      ["Snaplines","Linienanzeige"]
+    ]],
+    weapon: ["Weapon Menu","Waffenbezogene Optionen",[
+      ["Weapon Info","Waffeninformationen"],
+      ["Ammo Counter","Munitionsanzeige"],
+      ["Weapon Overlay","Waffenanzeige"],
+      ["Rapid Fire","Feuerraten-Option"],
+      ["No Recoil","Rückstoß-Option"]
+    ]],
+    zombies: ["Zombies","Zombies-Menüoptionen",[
+      ["Zombie HUD","Zombies-Anzeige"],
+      ["Round Display","Rundenanzeige"],
+      ["Zombie Counter","Zähleranzeige"],
+      ["God Mode","God-Mode-Option"],
+      ["Unlimited Ammo","Munitionsoption"]
+    ]],
+    multi: ["Multiplayer","Multiplayer-Menüoptionen",[
+      ["Player Overlay","Spieleranzeige"],
+      ["Team Display","Team-Anzeige"],
+      ["Score Display","Punkteanzeige"],
+      ["Name Tags","Namensanzeige"],
+      ["Radar Display","Radar-Anzeige"]
+    ]],
+    stats: ["Prestige & Stats","Profil- und Statistikoptionen",[
+      ["Prestige Display","Prestige-Anzeige"],
+      ["Level Display","Level-Anzeige"],
+      ["Stats Display","Statistikübersicht"],
+      ["Leaderboard","Bestenlisten-Anzeige"]
+    ]],
+    settings: ["Settings","Gestalte Farben und Effekte der Oberfläche",[
+      ["Rainbow Logo","Animiertes Regenbogen-Logo"],
+      ["Glow Effect","Leuchteffekt"],
+      ["Background Motion","Bewegter Hintergrund"],
+      ["Interface Glow","Leuchtender Menürand"]
+    ]]
+  };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    })[c]);
+  }
+
+  function applyColor() {
+    root.style.setProperty("--accent",accent);
+    const m = accent.match(/^#([0-9a-f]{6})$/i);
+    if (m) {
+      const n = parseInt(m[1],16);
+      root.style.setProperty("--rgb",`${n>>16},${(n>>8)&255},${n&255}`);
+    }
+    document.querySelectorAll(".logo").forEach(el => {
+      el.style.animation = rgb ? "logoRainbow 5s linear infinite" : "none";
+      if (!rgb) el.style.color = accent;
+    });
+    shell.style.animation = $("glowEffect")?.classList.contains("off")
+      ? "none" : "pulse 5s ease-in-out infinite";
+    document.body.style.setProperty("--accent",accent);
+  }
+
+  function toggleMarkup(key,label) {
+    return `<button class="switch ${toggles[key] ? "on" : ""}"
+      data-toggle="${esc(key)}" aria-label="${esc(label)}"
+      aria-pressed="${!!toggles[key]}"></button>`;
+  }
+
+  function itemMarkup(key,label,desc) {
+    return `<div class="item">
+      <div><div class="item-name">${esc(label)}</div>
+      <div class="item-desc">${esc(desc)}</div></div>
+      ${toggleMarkup(key,label)}
+    </div>`;
+  }
+
+  function render() {
+    const p = pages[pageName];
+    $("current").textContent = p[0].toUpperCase();
+    main.innerHTML = `
+      <div class="heading"><h1>${esc(p[0])}</h1>
+      <span class="badge">SRYMODZ</span></div>
+      <p class="desc">${esc(p[1])}</p>
+      <div class="group">OPTIONS</div>
+      ${p[2].map((item,i) => itemMarkup(pageName+"-"+i,item[0],item[1])).join("")}
+      ${pageName === "settings" ? `
+        <div class="group">COLOR CUSTOMIZATION</div>
+        <div class="item"><div><div class="item-name">Custom Accent Color</div>
+          <div class="item-desc">Wähle eine eigene Akzentfarbe</div></div>
+          <input type="color" id="colorPicker" value="${accent}" aria-label="Akzentfarbe">
+        </div>
+        <div class="item"><div><div class="item-name">Color Presets</div>
+          <div class="item-desc">Schnelle Farbauswahl</div></div>
+          <div class="color-options">
+            <button class="swatch" data-color="#00e5ff" style="background:#00e5ff" aria-label="Cyan"></button>
+            <button class="swatch" data-color="#ff315d" style="background:#ff315d" aria-label="Rot"></button>
+            <button class="swatch" data-color="#8b5cff" style="background:#8b5cff" aria-label="Violett"></button>
+            <button class="swatch" data-color="#36ff8b" style="background:#36ff8b" aria-label="Grün"></button>
+            <button class="swatch" data-color="#ffb52e" style="background:#ffb52e" aria-label="Orange"></button>
+          </div>
+        </div>
+        <div class="item"><div><div class="item-name">Rainbow Mode</div>
+          <div class="item-desc">Regenbogen-Logo ein- oder ausschalten</div></div>
+          ${toggleMarkup("rainbow-mode","Rainbow Mode")}
+        </div>
+        <div class="item"><div><div class="item-name">Reset Colors</div>
+          <div class="item-desc">Standardfarben wiederherstellen</div></div>
+          <button class="btn" id="reset">Reset</button>
+        </div>` : ""}
+      <div class="group">MENU CONTROL</div>
+      <div class="item"><div><div class="item-name">Close Menu</div>
+      <div class="item-desc">Menü ausblenden und wieder öffnen</div></div>
+      <button class="btn" id="hide">Schließen</button></div>`;
+    $("nav").querySelectorAll("button").forEach(b =>
+      b.classList.toggle("active",b.dataset.page===pageName));
+    applyColor();
+  }
+
+  $("nav").addEventListener("click",e => {
+    const b=e.target.closest("[data-page]");
+    if (!b) return;
+    pageName=b.dataset.page;
+    render();
+  });
+
+  main.addEventListener("click",e => {
+    const t=e.target.closest("[data-toggle]");
+    if (t) {
+      const key=t.dataset.toggle;
+      toggles[key]=!toggles[key];
+      if(key==="rainbow-mode") {
+        rgb=toggles[key];
+        applyColor();
+      }
+      t.classList.toggle("on",toggles[key]);
+      t.setAttribute("aria-pressed",String(!!toggles[key]));
+      return;
+    }
+    const sw=e.target.closest("[data-color]");
+    if(sw) {
+      accent=sw.dataset.color;
+      applyColor();
+      const picker=$("colorPicker");
+      if(picker) picker.value=accent;
+      return;
+    }
+    if(e.target.closest("#reset")) {
+      accent="#00e5ff"; rgb=true; toggles["rainbow-mode"]=true;
+      render(); return;
+    }
+    if(e.target.closest("#hide")) hide();
+  });
+
+  main.addEventListener("input",e => {
+    if(e.target.id==="colorPicker") {
+      accent=e.target.value;
+      applyColor();
+    }
+  });
+
+  $("rgbBtn").addEventListener("click",() => {
+    rgb=!rgb;
+    toggles["rainbow-mode"]=rgb;
+    applyColor();
+    if(pageName==="settings") render();
+  });
+
+  function hide() {
+    shell.classList.add("hidden");
+    $("reopen").style.display="block";
+  }
+  $("closeBtn").addEventListener("click",hide);
+  $("reopen").addEventListener("click",() => {
+    shell.classList.remove("hidden");
+    $("reopen").style.display="none";
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
